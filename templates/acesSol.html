@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="acessol" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcesSol</title>
+    
+    <!-- FRAMEWORKS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    
+    <!-- INTEGRANDO VLIBRAS -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <!-- FONTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Chewy&family=Fredoka:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Catamaran:wght@100..900&family=Chewy&family=Fredoka:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Karla:ital,wght@0,200..800;1,200..800&family=M+PLUS+Rounded+1c&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- OUTROS LINKS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/theme.css">
+    <link rel="stylesheet" href="font-size.js">
+    
+</head>
+<body class="min-h-screen m-0 bg-base-100 md:bg-[url(/static/img/solzinho.svg)] bg-no-repeat bg-top-right bg-size-[auto_800px] overflow-auto" x-data="{ authOpen: false, tela: 'login', scale: 1 } " >
+
+    <!-- div VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+
+<!--HEADER-->
+    <header x-data="{fontSize : 16}" class="bg-secondary text-primary fixed top-0 left-0 w-full px-10 z-50 md:w-full">
+        <div class="flex md:justify-between justify-between p-4 items-center">
+            <figure class="hidden md:flex ">
+                <img src="/static/img/logo.svg" alt="" class=" w-60" >  
+            </figure>     
+            <figure class="md:hidden ">
+                <img src="/static/img/girassolzinho.svg" class="">
+            </figure>
+
+            <!---menu mobile-->     
+                <div x-data="{ open: false }" class="md:hidden dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost">
+                        <i class="fa fa-bars text-3xl"></i>
+                    </label>
+
+                    <ul tabindex="0"
+                        class="dropdown-content menu bg-base-100 text-secondary-content rounded-box w-52 p-2 shadow-lg ">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><button @click="authOpen = true; tela = 'logincandidato'">Entrar</button> </li>
+                        <li x-data="{ open: false }" class="relative">
+                            <button @click="open = !open" class="p-2 hover:bg-gray-200">
+                                <i class="fa-solid fa-user text-lg"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+            <!--MENU DESKTOP-->
+            <ul class="flex items-center hidden md:flex gap-6">
+                
+                
+                <!--NAVEGACAO-->
+                <li><a href="#home" class="hover:font-semibold inline-block transition-transform duration-300 hover:scale-110">Início </a></li>
+                <li><a href="#sobre" class="hover:font-semibold inline-block transition-transform duration-300 hover:scale-110" >Sobre</a></li>
+                <li><a href="#blog" class="hover:font-semibold inline-block transition-transform duration-300 hover:scale-110">Blog</a></li>
+                
+                    <!--CONTROLES DE TEMA-->
+                    <li>
+                        <label class="flex cursor-pointer gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20"height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5" />
+                                <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                            </svg>
+                            <input type="checkbox" value="coffee" class="toggle theme-controller" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </label>
+                    </li>
+
+                    <li class="md:flex flex">
+                        <!-- CONTROLES DE FONTE -->
+                        <div class="flex gap-1 z-50">
+                            <button 
+                                @click="fontSize = Math.max(fontSize - 2, 12); document.documentElement.style.fontSize = fontSize + 'px';"
+                                class="btn btn-sm btn-outline font-bold text-sm">
+                                A-
+                            </button>
+                            <button 
+                                @click="fontSize = Math.min(fontSize + 2, 22); document.documentElement.style.fontSize = fontSize + 'px';"
+                                class="btn btn-sm btn-outline font-bold text-sm">
+                                A+
+                            </button>
+                        </div>
+                    </li>
+
+                    <!--MENU usuario-->
+                    <li x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class=" p-2 rounded-full hover:bg-gray-200 transition">
+                            <i class="fa-solid fa-user text-lg"></i>
+                        </button>
+                        <button @click="authOpen = true; tela = 'logincandidato'" class="btn btn-outline rounded-lg"> Entrar</button>                    
+            
+                    <div x-show="open" @click.outside="open = false" x-transition class="menu bg-secondary absolute right-0 mt-2 w-100 rounded-lg  shadow-lg z-50 ">
+                        <ul class="menu-items flex flex-col gap-4 p-4 ">
+    
+
+
+
+                            <!--informacoes do perfil-->
+                            <li x-data="{ open: false }" class="relative">
+                                <div @click="open = true" class="flex text-secondary-content items-center gap-2 bg-base-100  rounded-3xl text-secondary py-2 px-4 cursor-pointer hover:bg-gray-100 transition transition transition-duration-300 hover:scale-110">
+                                    <i class="fa-solid fa-user text-accent fa-lg "></i>
+                                    <span class="font-semibold text-lg"> Ver Informações do Perfil </span>
+                                </div>
+
+                                <!-- modal DE INFORMACOES  -->
+                                <div x-show="open" x-transition class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+
+                                    <div class="bg-base-100 relative w-[900px] h-[500px] overflow-y-auto text-secondary-content rounded-xl p-8 relative">
+
+                                        <!-- botão de fechar modal-->
+                                        <button @click="open = false" class="absolute top-3 right-3 text-secondary hover:text-gray-800">
+                                            <i class="fa-solid fa-xmark fa-lg"></i>
+                                        </button>
+
+                                    <!---INFORMACOES-->
+                                        <h1 class="text-4xl font-bold mb-4">Informações Pessoais </h1>
+                                    <div class="flex flex-row gap-10">
+
+                                        <div class="flex flex-col gap-4">
+
+                                            <div class="flex gap-8">
+                                                <div class="flex flex-col">
+                                                    <label for="nome" class="font-bold">Nome Completo:</label>
+                                                    <input id="nome" type="text" placeholder="Digite seu nome completo" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <label for="nascimento" class="font-bold">Data de Nascimento:</label>
+                                                    <input id="nascimento" type="date" placeholder="dd/mm/aaaa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                                
+                                                
+                                            </div>
+
+                                            <div class="flex gap-8">
+                                                <div class="flex flex-col">
+                                                    <label for="cpf" class="font-bold">CPF:</label>
+                                                    <input id="cpf" type="text" inputmode="numeric" placeholder="Digite seu CPF" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+
+                                                <div class="flex flex-col">
+                                                    <label for="tel" class="font-bold">Telefone:</label>
+                                                    <input id="tel" type="tel" placeholder="(99) 99999-9999" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="flex gap-8">
+                                                
+
+                                                <div class="flex flex-col">
+                                                    <label for="email" class="font-bold">Email:</label>
+                                                    <input id="email" type="email" placeholder="Digite seu email" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+
+                                                <div class="flex flex-col">
+                                                    <label for="senha" class="font-bold">Senha:</label>
+                                                    <input id="senha" type="password" placeholder="Digite sua senha" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                            </div>
+
+                                            <div class="flex gap-8">
+                                                <div class="flex flex-col">
+                                                    <label for="cep" class="font-bold">CEP:</label>
+                                                    <input id="cep" x-mod type="text" inputmode="numeric" placeholder="Digite seu CEP" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+
+                                                <div class="flex flex-col">
+                                                    <label for="rua" class="font-bold">Rua:</label>
+                                                    <input id="rua" type="text" placeholder="Digite o nome da rua" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="flex gap-8">
+                                                <div class="flex flex-col">
+                                                    <label for="bairro" class="font-bold">Bairro:</label>
+                                                    <input id="bairro" type="text" placeholder="Digite o nome do bairro" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+
+                                                <div class="flex flex-col">
+                                                    <label for="numero" class="font-bold">Número da Casa:</label>
+                                                    <input id="numero" type="number" placeholder="Digite o número da casa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col gap-4 justify-between">
+
+                                        
+                                                <div class="flex flex-col">
+                                                    <label class="font-bold">Deficiência:</label>
+                                                    <select class="select bg-white border border-secondary rounded-md py-2 px-5">
+                                                    <option>Deficiência Física</option>
+                                                    <option>Deficiência Auditiva</option>
+                                                    <option>Deficiência Visual</option>
+                                                    <option>Deficiência Intelectual</option>
+                                                    <option>Deficiência Múltipla</option>
+                                                    <option>Deficiência Psicossocial</option>
+                                                    <option>TEA</option>
+                                                    </select>
+                                                </div>
+
+                                                <div>
+                                                    <strong>Gênero:</strong>
+                                                    <div class="flex flex-col gap-4 mt-2">
+                                                    <label><input type="radio" name="genero"> Feminino</label>
+                                                    <label><input type="radio" name="genero"> Masculino</label>
+                                                    <label><input type="radio" name="genero"> Prefiro não informar</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex  mt-6 gap-4">
+                                                    <button class="btn btn-accent">Editar</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                            </li>
+
+                            <!--curriculo-->
+                            <li x-data="{curriculo : false}" class="relative">
+                                <div @click="open = true" onclick="curriculum_modal.showModal()" class="flex flex-row text-secondary-content items-center gap-2 bg-base-100 rounded-3xl text-secondary py-2 cursor-pointer transition transition-duration-300 hover:scale-110 hover:bg-gray-100">
+                                    <i class="fa-solid fa-file text-accent fa-lg "></i>
+                                    <span class="font-semibold text-lg">Meu currículo </span>
+                                    <dialog id="curriculum_modal" class="modal">
+                                        <div class="modal-box">
+                                            <form method="dialog">
+                                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                            </form>
+                                            <form class="flex items-center flex-col gap-5" action="/upload" method="post" enctype="multipart/form-data">
+                                                <label class="" for="arquivo">Selecione um arquivo:</label>
+                                                <input class="bg-base-100 max-w-100 rounded p-15" type="file" id="arquivo" name="arquivo">
+                                                
+                                                <button class="btn btn-outline" type="submit">Enviar</button>
+                                            </form>
+                                            
+                                        </div>
+                                    </dialog>
+
+                                    
+                                </div>
+                            </li>
+                            <li class="flex flex-row  text-secondary-content  items-center gap-2 bg-base-100 rounded-3xl  text-secondary py-2 cursor-pointer transition transition-duration-300 hover:scale-110">
+                                <i class="fa-solid fa-bell text-accent fa-lg "></i>
+                                <span class="font-semibold text-lg">Notificações</span>
+                            </li>
+                            <li class="flex flex-row  text-secondary-content  items-center gap-2 bg-base-100 rounded-3xl  text-secondary py-2 cursor-pointer transition transition-duration-300 hover:scale-110">
+                                <i class="fa-solid fa-arrow-right-from-bracket text-accent fa-lg "></i>
+                                <span class="font-semibold text-lg">Sair</span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>   
+            </ul>
+        </div>
+        <!-- CONTROLES DE FONTE MD: -->
+        <div class="md:hidden absolute right-0 bg-secondary p-1 rounded-bl-lg flex gap-1 z-50">
+            <button 
+                @click="fontSize = Math.max(fontSize - 2, 12); document.documentElement.style.fontSize = fontSize + 'px';"
+                class="btn btn-sm btn-outline font-bold text-sm">
+                A-
+            </button>
+            <button 
+                @click="fontSize = Math.min(fontSize + 2, 22); document.documentElement.style.fontSize = fontSize + 'px';"
+                class="btn btn-sm btn-outline font-bold text-sm">
+                A+
+            </button>
+        </div>
+        <!-- CONTROLE DE TEMA MD: -->
+        <label class="md:hidden absolute rounded-br-lg p-1 left-0 bg-secondary flex cursor-pointer gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20"height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+            </svg>
+            <input type="checkbox" value="coffee" class="toggle theme-controller" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </label>
+    </header>
+    
+
+
+    <!--MAIN-->
+    <main class="max-w-7xl mx-auto text-secondary-content" id="home" x-data="{expandir: false}" :style="`font-size: ${scale * 16}px`">
+
+        <!--HERO-->
+        <section class="pt-32 mb-20 md:w-160 w-full flex items-center px-10">
+            <div class=" flex flex-col md:flex-row text-center md:text-left gap-32">
+            
+            <div class="max-w-4xl mt-16">
+                <h1 class="font-bold text-7xl md:text-5xl font-[Fredoka] tracking-wider">
+                Acessibilidade e solidariedade para todos 
+                </h1>
+
+                <p class="mt-6 text-lg font-[Catamaran] font-semibold">
+                Nosso objetivo é trazer mais inclusão a pessoas que normalmente são esquecidas, aqui vocês podem melhorar seu currículo com cursos profissionalizantes e de qualidade que implementam suas habilidades e os ajudam a ingressar no mercado de trabalho, além de encontrar vagas de emprego onde se sentirem mais confortáveis e incluídos
+                </p>
+                
+
+                <div class="flex items-center gap-6 mt-4">
+                    <button @click="authOpen = true; tela = 'cadastroempresa'" class="btn btn-lg btn-outline rounded-lg mt-6 transition transition-duration-300 hover:scale-110">Sou empresa</button>
+                    <button @click="authOpen = true; tela = 'cadastrocandidato'"  class="btn btn-lg btn-accent text-white mt-6 transition transition-duration-300 hover:scale-110">Sou candidato</button>
+                </div>
+            </div>
+
+            </div>
+        </section>
+
+    <!-- MODAL-->
+    <section>
+        <div x-show="authOpen"
+            x-transition
+            class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+        <div class="relative bg-base-100 p-8 rounded-lg"
+            @click.away="authOpen = false">
+
+            <button @click="authOpen = false"
+                    class="absolute top-3 right-3">
+            ✕
+            </button>
+
+        <!-- LOGIN -->
+        <div x-show="tela === 'logincandidato'" x-transition>
+            <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" role="dialog" aria-modal="true">
+            
+                <div class="relative bg-base-100 text-secondary  rounded-lg p-8 w-full max-w-md shadow-lg">
+                <button @click="authOpen = false" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold">
+                    ✕
+                </button>
+
+                    <h2 class="text-2xl font-bold mb-6 text-center">Entrar</h2>
+                    <div class="flex flex-col items-center gap-4">
+
+                        <input id="email" type="email" placeholder="Digite seu email" class="input bg-white border border-secondary rounded-md py-2 px-5">
+
+                        <input id="senha" type="password" placeholder="Digite sua senha" class="input bg-white border border-secondary rounded-md py-2 px-5">                    
+                        
+                        <button class="btn btn-secondary text-white w-full">Entrar</button>
+                    </div>
+
+
+
+                    <p class="mt-4 text-center text-sm">
+                        Não tem conta?
+                        <button @click="tela = 'cadastrocandidato'" class="link font-semibold">
+                        Criar conta
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+<!--cadastro empresa-->
+        <div x-show="tela === 'cadastroempresa'" x-transition @click.away="authOpen = false">
+            <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                <div class="relative bg-base-100 text-secondary  rounded-lg p-8 w-full max-w-md shadow-lg">
+                <button 
+                        @click="authOpen = false"
+                        class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold"
+                        aria-label="Fechar"
+                    >
+                        ✕
+                </button>
+
+                    <h2 class="text-2xl font-bold mb-6 text-center">Entrar</h2>
+                    <div class="flex flex-col items-center gap-4">
+
+                        <input id="empresa" type="text" placeholder="Digite o nome da empresa " class="input bg-white border border-secondary rounded-md py-2 px-5">
+
+                        <input id="email" type="email" placeholder="Digite seu email" class="input bg-white border border-secondary rounded-md py-2 px-5">
+
+                        <input id="senha" type="password" placeholder="Digite sua senha" class="input bg-white border border-secondary rounded-md py-2 px-5">                    
+                        
+                        <button class="btn btn-secondary text-primary w-full">Entrar</button>
+                    </div>
+
+
+
+                    <p class="mt-4 text-center text-sm">
+                        Não tem conta?
+                        <button @click="tela = 'cadastrocandidato'" class="link font-semibold">
+                        Criar conta
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CADASTRO candidato -->
+        <div x-show="tela === 'cadastrocandidato'" x-transition  @click.away="authOpen = true">
+            <div x-show="open" x-transition class="fixed inset-0 bg-black/50 flex justify-center items-center z-50" role="dialog" aria-modal="true">
+
+                <div class="bg-base-100 text-secondary rounded-xl p-8 relative w-[900px] h-[500px] overflow-y-auto">
+
+                    <div class="absolute inset-0 bg-base-100 
+                                before:content-[''] before:absolute before:inset-0
+                                before:bg-[url(/static/img/solzinho.svg)] before:bg-no-repeat 
+                                before:bg-top-right before:bg-[length:auto_400px]
+                                before:opacity-20
+                                pointer-events-none">
+                        </div>
+
+                        <!--conteudo -->
+                    <div class="relative z-10 text-secondary">
+
+
+                        <!-- botão de fechar -->
+                        <button 
+                            @click="authOpen = false"
+                            class="absolute top-3 right-3 text-secondary hover:text-gray-800"
+                        >
+                            <i class="fa-solid fa-xmark fa-lg"></i>
+                        </button>
+                        <h1 class="text-4xl font-bold mb-4">Dados Cadastrais</h1>
+                        <div class="flex flex-row gap-10">
+
+                            <div class="flex flex-col gap-4">
+
+                                <div class="flex gap-8">
+                                    <div class="flex flex-col">
+                                        <label for="nome" class="font-bold">Nome Completo:</label>
+                                        <input id="nome" type="text" placeholder="Digite seu nome completo" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="nascimento" class="font-bold">Data de Nascimento:</label>
+                                        <input id="nascimento" type="text" placeholder="dd/mm/aaaa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                    
+                                    
+                                </div>
+
+                                <div class="flex gap-8">
+                                    <div class="flex flex-col">
+                                        <label for="cpf" class="font-bold">CPF:</label>
+                                        <input id="cpf" type="text" placeholder="Digite seu CPF" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="tel" class="font-bold">Telefone:</label>
+                                        <input id="tel" type="tel" placeholder="(99) 99999-9999" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="flex gap-8">
+                                    
+
+                                    <div class="flex flex-col">
+                                        <label for="email" class="font-bold">Email:</label>
+                                        <input id="email" type="email" placeholder="Digite seu email" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="senha" class="font-bold">Senha:</label>
+                                        <input id="senha" type="text" placeholder="Digite sua senha" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-8">
+                                    <div class="flex flex-col">
+                                        <label for="cep" class="font-bold">CEP:</label>
+                                        <input id="cep" type="text" placeholder="Digite seu CEP" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="rua" class="font-bold">Rua:</label>
+                                        <input id="rua" type="text" placeholder="Digite o nome da rua" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="flex gap-8">
+                                    <div class="flex flex-col">
+                                        <label for="bairro" class="font-bold">Bairro:</label>
+                                        <input id="bairro" type="text" placeholder="Digite o nome do bairro" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="numero" class="font-bold">Número da Casa:</label>
+                                        <input id="numero" type="text" placeholder="Digite o número da casa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4 justify-between">
+
+                            
+                                    <div class="flex flex-col">
+                                        <label class="font-bold">Deficiência:</label>
+                                        <select class="select bg-white border border-secondary rounded-md py-2 px-5">
+                                        <option>Deficiência Física</option>
+                                        <option>Deficiência Auditiva</option>
+                                        <option>Deficiência Visual</option>
+                                        <option>Deficiência Intelectual</option>
+                                        <option>Deficiência Múltipla</option>
+                                        <option>Deficiência Psicossocial</option>
+                                        <option>TEA</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <strong>Gênero:</strong>
+                                        <div class="flex flex-col gap-4 mt-2">
+                                        <label><input type="radio" name="genero"> Feminino</label>
+                                        <label><input type="radio" name="genero"> Masculino</label>
+                                        <label><input type="radio" name="genero"> Prefiro não informar</label>
+                                        </div>
+                                    </div>
+        <div 
+        x-data="{
+            cadastrar() {
+                const formData = {
+                    nome: $refs.nome?.value || '',
+                    nascimento: $refs.nascimento?.value || '',
+                    cpf: $refs.cpf?.value || '',
+                    tel: $refs.tel?.value || '',
+                    email: $refs.email?.value || '',
+                    senha: $refs.senha?.value || '',
+                    cep: $refs.cep?.value || '',
+                    rua: $refs.rua?.value || '',
+                    bairro: $refs.bairro?.value || '',
+                    numero: $refs.numero?.value || '',
+                    deficiencia: $refs.deficiencia?.value || '',
+                    genero: document.querySelector('input[name=\'genero\']:checked')?.value || ''
+                };
+                
+                fetch('/cadastro', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert('Cadastro OK: ' + data.message);
+                    authOpen = false;
+                })
+                .catch(err => alert('Erro: ' + err));
+            }
+        }" 
+        x-show="tela === 'cadastrocandidato'" 
+        x-transition 
+        @click.away="authOpen = true"
+        >
+        <div x-show="open" x-transition class="fixed inset-0 bg-black/50 flex justify-center items-center z-50" role="dialog" aria-modal="true">
+            <div class="bg-base-100 text-secondary rounded-xl p-8 relative w-[900px] h-[500px] overflow-y-auto">
+                <div class="absolute inset-0 bg-base-100 
+                    before:content-[''] before:absolute before:inset-0
+                    before:bg-[url(img/solzinho.svg)] before:bg-no-repeat 
+                    before:bg-top-right before:bg-[length:auto_400px]
+                    before:opacity-20 pointer-events-none">
+                </div>
+
+                <!-- Conteúdo -->
+                <div class="relative z-10 text-secondary">
+                    <!-- Botão de fechar -->
+                    <button @click="authOpen = false" class="absolute top-3 right-3 text-secondary hover:text-gray-800">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                    </button>
+                    <h1 class="text-4xl font-bold mb-4">Dados Cadastrais</h1>
+                    
+                    <div class="flex flex-row gap-10">
+                    <div class="flex flex-col gap-4">
+                        <!-- COLUNA ESQUERDA -->
+                        <div class="flex gap-8">
+                            <div class="flex flex-col">
+                                <label for="nome" class="font-bold">Nome Completo:</label>
+                                <input x-ref="nome" id="nome" type="text" placeholder="Digite seu nome completo" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="nascimento" class="font-bold">Data de Nascimento:</label>
+                                <input x-ref="nascimento" id="nascimento" type="text" placeholder="dd/mm/aaaa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8">
+                            <div class="flex flex-col">
+                                <label for="cpf" class="font-bold">CPF:</label>
+                                <input x-ref="cpf" id="cpf" type="text" placeholder="Digite seu CPF" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="tel" class="font-bold">Telefone:</label>
+                                <input x-ref="tel" id="tel" type="tel" placeholder="(99) 99999-9999" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8">
+                            <div class="flex flex-col">
+                                <label for="email" class="font-bold">Email:</label>
+                                <input x-ref="email" id="email" type="email" placeholder="Digite seu email" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="senha" class="font-bold">Senha:</label>
+                                <input x-ref="senha" id="senha" type="password" placeholder="Digite sua senha" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8">
+                            <div class="flex flex-col">
+                                <label for="cep" class="font-bold">CEP:</label>
+                                <input x-ref="cep" id="cep" type="text" placeholder="Digite seu CEP" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="rua" class="font-bold">Rua:</label>
+                                <input x-ref="rua" id="rua" type="text" placeholder="Digite o nome da rua" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8">
+                            <div class="flex flex-col">
+                                <label for="bairro" class="font-bold">Bairro:</label>
+                                <input x-ref="bairro" id="bairro" type="text" placeholder="Digite o nome do bairro" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="numero" class="font-bold">Número da Casa:</label>
+                                <input x-ref="numero" id="numero" type="text" placeholder="Digite o número da casa" class="input bg-white border border-secondary rounded-md py-2 px-5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUNA DIREITA -->
+                    <div class="flex flex-col gap-4 justify-between">
+                        <div class="flex flex-col">
+                            <label class="font-bold">Deficiência:</label>
+                            <select x-ref="deficiencia" class="select bg-white border border-secondary rounded-md py-2 px-5">
+                                <option>Deficiência Física</option>
+                                <option>Deficiência Auditiva</option>
+                                <option>Deficiência Visual</option>
+                                <option>Deficiência Intelectual</option>
+                                <option>Deficiência Múltipla</option>
+                                <option>Deficiência Psicossocial</option>
+                                <option>TEA</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <strong>Gênero:</strong>
+                            <div class="flex flex-col gap-4 mt-2">
+                                <label><input type="radio" name="genero" value="Feminino"> Feminino</label>
+                                <label><input type="radio" name="genero" value="Masculino"> Masculino</label>
+                                <label><input type="radio" name="genero" value="Prefiro não informar"> Prefiro não informar</label>
+                            </div>
+                        </div>
+
+                        <!-- Botão -->
+                        <div class="flex flex-col gap-2">
+                            <button @click="cadastrar()" class="btn btn-secondary text-white w-full mt-4">Cadastrar-se</button>
+                            <p class="text-center text-sm">
+                                Já tem uma conta?
+                                <button @click="tela = 'logincandidato'" class="link font-semibold">Entrar</button>
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <!-- botão colapse -->
+    <div id="sobre"  class="flex justify-center pb-2">
+        <button @click="expandir = !expandir"><i class="fa-solid fa-circle-chevron-down w-10xl"></i></button>
+    </div>
+    
+    <!--SEÇAO SOBRE -->
+    <section x-show="expandir" x-transition.duration.500ms  class="">
+    
+    <div x-show="expandir" x-collapse.min.50px class="flex flex-col items-center text-center px-4">
+        <h1 class="text-5xl font-bold py-10 font-[Fredoka] tracking-wider">
+        Conheça o AcesSol
+        </h1>
+
+        <p class="py-5 text-lg max-w-5xl font-[Catamaran] font-semibold">
+        AcesSol é um projeto criado pelos alunos do 2º ano de Informática e do 2º ano de Comércio do IFRN Campus Natal-Zona Norte com orientação da Docente Marjorie Ramos. Neste projeto, buscamos ajudar a contruir uma cidade mais acessível e solidária para todos, aqui todas as pessoas com deficiências poderão ser devidamente incluídas na sociedade. Com uma aba Cursos e Empregos, nós disponibilizamos formas de ingressarem no mercado de trabalho, tanto disponibilizando vagas, quanto aumentando o nível de conhecimento dos participantes com cursos profissionalizantes que os ajudam a ter mais chances de conseguir um emprego.
+        </p>
+
+        <figure>
+        <img src="/static/img/girassolzinho2.svg" alt="Girassol Fofinho" class="mt-6">
+        </figure>
+
+    </div>
+
+    <div x-show="expandir" class="mt-26 flex flex-col items-center gap-18 px-4">
+        <h2 class="text-4xl font-bold font-[Fredoka] tracking-wider">
+        Nossos Pilares
+        </h2>
+
+        <div class="flex flex-col md:flex-row gap-12 max-w-6xl">
+        <strong class="text-4xl text-success self-center font-[Fredoka] tracking-wider">
+            Solidariedade
+        </strong>
+        <p class="text-xl md:text-left text-center font-[Catamaran] font-semibold">
+            Sabemos que em diversos momentos Pessoas Com Deficiência passam por dificuldades, seja com relação ao preconceito ou simplesmente pela falta de oportunidade imposta a eles, por esse motivo, buscamos ajudar o máximo de pessoas com o auxílio de cursos e vagas de emprego exclusivas 
+        </p>
+        </div>
+
+        <div class="flex flex-col md:flex-row-reverse gap-12 max-w-6xl">
+        <strong class="text-4xl  text-success self-center font-[Fredoka] tracking-wider ">
+            Acessibilidade
+        </strong>
+        <p class="text-xl md:text-left text-center font-[Catamaran] font-semibold ">
+            Resolvemos então criar um projeto gratuito e acessível para todos, um local onde todos podem refletir e aprender sobre algo novo e que possivelmente o ajudará a conquistar o tão sonhado emprego ou até mesmo unicamente pelo conhecimento
+        </p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-12 max-w-6xl">
+        <strong class="text-4xl  text-success self-center font-[Fredoka] tracking-wider">
+            Inclusão
+        </strong>
+        <p class="text-xl md:text-left text-center font-[Catamaran] font-semibold">
+            Muitas vezes a exclusão de Pessoas Com Deficiência causa consequências seferas, muitas pessoas se reclusam com medo dos constrangimentos e da frustração de se sentirem invisíveis, entretanto, nosso objetivo e desmistificar tudo isso trazendo um ambiente mais amigável e inclusivo para que essas pessoas não se sintam excluídas.
+        </p>
+        </div>
+    </div>
+
+        </section>
+
+        <!-- SEÇAO BLOG -->
+        <section x-show="expandir" id="blog" class="pt-32 px-10 md:px-auto">
+            <div class="flex flex-col items-center text-center px-4 ">
+                <h1 class="text-5xl max-md:text-7xl font-bold pb-10 font-[Fredoka] tracking-wider">Blog</h1>
+                <p class="text-xl font-[Catamaran] font-semibold">Nesta seção, você poderá encontrar artigos que lhe ajudem a entender as causas relacionadas aos PCDs, suas dificuldades, importância da inclusão e muito mais. Expanda seus conhecimentos e entenda um pouco mais sobre a realidade destas pessoas!</p>
+            </div>
+
+            <!--carrossel-->
+            <div class="carousel text-secondary w-full gap-10 mt-10 scroll-smooth">
+
+            <!--artigo1-->
+                <div id="artigo1" class="carousel-item md:w-1/4 w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg ">
+                    <figure> 
+                        <img src="/static/img/sobre rodas - filme.jpg" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class="py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl ">20 filmes com a inclusão de pessoas com deficiência </strong>
+                        <p class="font-[Catamaran] font-semibold">Conheça 20 filmes que pregam a inclusão através da participação de PCDs. </p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://freedom.ind.br/20-filmes-inclusao-pessoas-com-deficiencia/" target="_blank">Acessar </a>
+                    </button>
+                </div>
+
+                <!--artigo2-->
+                <div id="artigo2" class="carousel-item w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg">
+                    <figure> 
+                        <img src="/static/img/imagem capacitismo.webp" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class=" py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl">O que é o capacitismo e como combate-lo</strong>
+                        <p class="font-[Catamaran] font-semibold">O que é o capacitismo e como combate-lo? Descubra clicando no link abaixo!</p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://www.gov.br/mdh/pt-br/assuntos/noticias/2024/janeiro/capacitismo-o-que-e-como-combater-e-por-que-e-tao-importante-falar-sobre-o-tema" target="_blank">Acessar </a>
+                    </button>
+                </div>
+
+                <!--artigo3-->
+                <div id="artigo3" class="carousel-item w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg">
+                    <figure> 
+                        <img src="/static/img/tipos de deficiência - imagem.png" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class=" py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl">Lista completa de tipos de deficiência</strong>
+                        <p class="font-[Catamaran] font-semibold">Quais são os tipos de deficiêcia que existem? Veja a lista completa</p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://cidesp.com.br/artigo/quais-sao-os-tipos-de-deficiencia/" target="_blank">Acessar </a>
+                    </button>
+                </div>
+
+                <!--artigo4-->
+                <div id="artigo4" class="carousel-item w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg">
+                    <figure> 
+                        <img src="/static/img/Direitos dos PCDs - imagem.webp" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class=" py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl">11 direitos de PCDs garantidos pela lei</strong>
+                        <p class="font-[Catamaran] font-semibold">Conheça 11 direitos garantidos as Pessoas Com Deficiências que você deve conhecer</p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://www.deficienteciente.com.br/11-direitos-da-pcd-reconhecidos-por-lei-que-voce-precisa-conhecer.html" target="_blank">Acessar </a>
+                    </button>
+                </div>
+
+                <!--artigo5-->
+                <div id="artigo5" class="carousel-item w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg">
+                    <figure> 
+                        <img src="/static/img/O q signific pcd - Imagem.webp" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class=" py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl">O que significa PCD e quem se enquadra como um?</strong>
+                        <p class="font-[Catamaran] font-semibold">Entenda o que significa a sigla PCD e quem se enquadra nela </p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://www.terra.com.br/nos/pcd-o-que-significa-e-quem-se-enquadra,8757a445a54c5cd46cb4d5e02579e177dauonkwa.html" target="_blank">Acessar </a>
+                    </button>
+                </div>
+
+                <!--artigo6-->
+                <div id="artigo6" class="carousel-item w-1/4 flex flex-col bg-white rounded-lg p-6 shadow-lg">
+                    <figure> 
+                        <img src="/static/img/stephen hawking - img.jpg" alt="Imagem placeholder" class="h-50 object-cover rounded w-full">
+                    </figure>  
+                    <div class=" py-4 flex flex-col gap-3">
+                        <p>23/01/26</p>
+                        <strong class="text-xl">5 PCDs que entraram para a história</strong>
+                        <p class="font-[Catamaran] font-semibold">Conheça 5 PCDs que superaram os desafios e se tornaram simbolos de superação</p>
+                    </div>
+                    <button class="btn btn-accent transition-transform duration-300 hover:scale-110 hover:underline relative inset-x-0 bottom-0">
+                        <a href="https://freedom.ind.br/5-pcds-que-mudaram-a-historia-conquista-e-transformacao/" target="_blank">Acessar </a>
+                    </button>
+                </div>
+        
+        </div>
+        <div class="flex justify-center gap-10 mt-10 pb-10">           
+            <a href="#artigo1" class="btn btn-circle ">❮</a>
+            <a href="#artigo6" class="btn btn-circle ">❯</a>   
+        </div>
+
+
+        </section>
+
+                <!-- SEÇAO EMPREGOS -->
+                <section x-data="{ opEmp: false, opCurs: false }" class="">
+                    <div class="fab left-0 bottom-0 mb-0 pl-10 font-[Fredoka]">
+                        <div tabindex="0" role="button" class="btn btn-lg btn-circle btn-accent">A</div>
+                
+                        <div class="text-success font-bold mix-blend-difference">
+                            <button 
+                                class="btn btn-secondary btn-lg btn-circle text-white transition transition-duration-300 hover:scale-110" 
+                                @click="opEmp = true; setTimeout(() => document.getElementById('empregos_modal').showModal(), 0)">
+                                E
+                            </button> 
+                            Empregos
+                        </div>
+                
+                        <div class="text-success font-bold mix-blend-difference">
+                            <button 
+                                class="btn btn-secondary btn-lg btn-circle text-white transition transition-duration-300 hover:scale-110" 
+                                @click="opCurs = true; setTimeout(() => document.getElementById('cursos_modal').showModal(), 0)">
+                                C
+                            </button> 
+                            Cursos
+                        </div>
+                    </div>
+                
+                    <!-- MODAL DE EMPREGOS -->
+                    <dialog id="empregos_modal" class="modal">
+                        <div class="modal-box w-full max-w-7xl">
+                            <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                
+                                <div class="flex flex-col items-end text-center px-4">
+                                    <h1 class="text-5xl font-bold py-5">Buscar Vagas</h1>
+                                </div>
+                
+                                <!-- SEÇÃO DE BUSCA -->
+                                <section class="flex gap-15 pl-20">
+                                    <div>
+                                        <p class="py-2 font-bold">Busque sua vaga</p>
+                                        <div>
+                                            <input 
+                                                type="text" 
+                                                placeholder="Buscar por vaga..." 
+                                                class="input bg-white text-secondary border border-secondary rounded-md py-2 pr-15 pl-5 cursor-pointer focus:ring focus:ring-gray-500">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="py-2 font-bold">Região Administrativa</p>
+                                        <div class="flex gap-5">
+                                            <select class="select bg-white text-secondary border border-secondary rounded-md py-2 pr-15 pl-5 cursor-pointer focus:ring focus:ring-gray-500">
+                                                <option value="ZN">Zona Norte</option>
+                                                <option value="ZL">Zona Leste</option>
+                                                <option value="ZS">Zona Sul</option>
+                                                <option value="ZO">Zona Oeste</option>
+                                            </select>
+                
+                                            <div>
+                                                <button class="btn btn-accent text-[#FFF] py-2 px-7 rounded-lg cursor-pointer hover:font-semibold inline-block transition-transform duration-300 hover:scale-110">
+                                                    Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                
+                                <!-- SEÇÃO COM FILTROS E VAGAS -->
+                                <section class="flex justify-around px-10">
+                                    <!-- FILTROS -->
+                                    <section class="flex flex-col text-secondary p-8 gap-15">
+                                        <h1 class="text-3xl font-bold">Filtros</h1>
+                                        <div class="flex flex-col bg-white p-8 gap-8 rounded-lg shadow-lg">
+                                            <div class="flex flex-col gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">LOCAL DE TRABALHO</p>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Presencial
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Remoto
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Hibrído
+                                                </label>
+                                            </div>
+                
+                                            <div class="flex flex-col gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">ESCOLARIDADE</p>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Fundamental
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Médio
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Superior
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Pós Graduação
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Mestrado
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Doutorado
+                                                </label>
+                                            </div>
+
+                                            <div class="flex flex-col gap-2 gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">SETOR</p>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Administração 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Comércio e Vendas
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Educação
+                                                </label>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Financias 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Turismo
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Informática
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Saúde
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Comunicação  
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Recursos Humanos
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Serviços Gerais
+                                                </label>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Engenharia 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Jurídico
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Outros
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                
+                                    <!-- VAGAS -->
+                                    <section class="flex flex-col pt-15 list-none text-secondary">
+                                        <!-- VAGA 1 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/programador.jpg" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Vaga de desenvolvedor</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Empresa: TechNova</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Vaga para programador Júnior a Pleno capaz de criar aplicativos e sites, corrigir bugs e implementar funcionalidades em sistemas web ou desktop. Desenvolvedor deve ter habilidades com Ruby</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Lagoa Azul - ZN</p>
+                                                    <p>Salário: R$4.500</p>
+                                                    <p>Local de Trabalho: Homeoffice</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('vagas_modal_1').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="vagas_modal_1" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga salva com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('plus_modal_1').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="plus_modal_1" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga adicionada com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- VAGA 2 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/marketing - vaga.jpg" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Vaga de Marketing Digital</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Empresa: Lumina Creativa</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Vaga para profissional no marketing digital capaz de criar campanhas online de qualidade, gerenciar de forma satisfatória redes sociais da empresa, criar bons anúncios e análise de resultados</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Potengi - ZN</p>
+                                                    <p>Salário: R$3.800</p>
+                                                    <p>Local de Trabalho: Hibrído</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('vagas_modal_2').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="vagas_modal_2" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga salva com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('plus_modal_2').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="plus_modal_2" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga adicionada com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- VAGA 3 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/Vendas - emprego.webp" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Vaga de assistente de vendas</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Vaga de assistente de vendas</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Vaga para profissional que possa realizar bom atendimento ao cliente, organização de produtos, controle de estoque e suporte às operações de loja.</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Nossa Senhora da Apresentação - ZN</p>
+                                                    <p>Salário: R$2.300</p>
+                                                    <p>Local de Trabalho: Presencial</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('vagas_modal_3').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="vagas_modal_3" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga salva com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('plus_modal_3').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="plus_modal_3" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Vaga adicionada com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </section>
+                            </form>
+                        </div>
+                    </dialog>
+
+                    <!-- MODAL DE CURSOS -->
+                    <dialog id="cursos_modal" class="modal">
+                        <div class="modal-box w-full max-w-7xl">
+                            <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                
+                                <div class="flex flex-col items-end text-center px-4">
+                                    <h1 class="text-5xl font-bold py-5">Buscar Cursos</h1>
+                                </div>
+                
+                                <!-- SEÇÃO DE BUSCA -->
+                                <section class="flex gap-15 pl-20">
+                                    <div>
+                                        <p class="py-2 font-bold">Busque seu curso</p>
+                                        <div>
+                                            <input 
+                                                type="text" 
+                                                placeholder="Buscar por curso..." 
+                                                class="input bg-white text-secondary border border-secondary rounded-md py-2 pr-15 pl-5 cursor-pointer focus:ring focus:ring-gray-500">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <p class="py-2 font-bold">Região Administrativa</p>
+                                        <div class="flex gap-5">
+                                            <select class="select bg-white text-secondary border border-secondary rounded-md py-2 pr-15 pl-5 cursor-pointer focus:ring focus:ring-gray-500">
+                                                <option value="ZN">Zona Norte</option>
+                                                <option value="ZL">Zona Leste</option>
+                                                <option value="ZS">Zona Sul</option>
+                                                <option value="ZO">Zona Oeste</option>
+                                            </select>
+                
+                                            <div>
+                                                <button class="btn btn-accent text-[#FFF] py-2 px-7 rounded-lg cursor-pointer hover:font-semibold inline-block transition-transform duration-300 hover:scale-110">
+                                                    Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                
+                                <!-- SEÇÃO COM FILTROS E VAGAS -->
+                                <section class="flex justify-around px-10">
+                                    <!-- FILTROS -->
+                                    <section class="flex flex-col text-secondary p-8 gap-15">
+                                        <h1 class="text-3xl font-bold">Filtros</h1>
+                                        <div class="flex flex-col bg-white p-8 gap-8 rounded-lg shadow-lg">
+                                            <div class="flex flex-col gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">MODALIDADE DE ENSINO</p>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Presencial
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> EAD
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Hibrído
+                                                </label>
+                                            </div>
+                
+                                            <div class="flex flex-col gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">ESCOLARIDADE</p>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Fundamental
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Médio
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Superior
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Pós Graduação
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Mestrado
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Doutorado
+                                                </label>
+                                            </div>
+
+                                            <div class="flex flex-col gap-2 gap-2 font-[Catamaran] font-semibold">
+                                                <p class="font-bold">SETOR</p>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Administração 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Comércio e Vendas
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Educação
+                                                </label>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Financias 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Turismo
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Informática
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Saúde
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Comunicação  
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Recursos Humanos
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Serviços Gerais
+                                                </label>
+                                                <label> 
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3"> Engenharia 
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Jurídico
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" class="checkbox checkbox-sm cursor-pointer mx-3">Outros
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                
+                                    <!-- CURSOS -->
+                                    <section class="flex flex-col pt-15 list-none text-secondary">
+                                        <!-- CURSO 1 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/programador.jpg" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Curso de Desenvolvedor Web</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Empresa: TechNova</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Curso de Desenvolvedor Web para produção de sites com Html, Css e Java Script. <br>Tecnologias aprendidas: Html Completo, Css Completo (com frameworks) e Java Script Intermediário (com frameworks).</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Lagoa Azul - ZN</p>
+                                                    <p>Duração: 120h</p>
+                                                    <p>Modalidade: EAD</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cursos_modal_1').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="cursos_modal_1" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso salvo com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cplus_modal_1').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="cplus_modal_1" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso adicionado com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- CURSO 2 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/marketing - vaga.jpg" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Curso de Turismo (Módulo Básico)</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Empresa: Lumina Creativa</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Prepare-se para planejar, gerenciar e promover destinos e serviços turísticos, abordando áreas como hotelaria, eventos, agenciamento e políticas públicas sustentáveis de maneira inicial.</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Potengi - ZN</p>
+                                                    <p>Duração: 80h</p>
+                                                    <p>Modalidade: Híbrida</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cursos_modal_2').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="cursos_modal_2" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso salvo com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cplus_modal_2').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="cplus_modal_2" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso adicionado com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- CURSO 3 -->
+                                        <div class="flex flex-col shadow-lg bg-white max-w-4xl rounded-xl p-10 m-5 shadow-lg">
+                                            <div class="flex flex-row">
+                                                <figure class="pr-5 py-5 mr-4 max-w-sm w-max max-h-sm h-max">
+                                                    <img src="/static/img/Vendas - emprego.webp" alt="Imagem placeholder" class="object-cover rounded">
+                                                </figure>
+                                                <div>
+                                                    <h5 class="font-bold text-xl pb-3">Curso de Operador de Caixa</h5>
+                                                    <p class="pb-3 font-[Catamaran] font-semibold">Empresa: TrendShop</p>
+                                                    <p class="pb-10 font-[Catamaran] font-semibold">Curso profissionalizante de Operador de Caixa, com módulos de atendimento ao cliente, manuseio de pagamentos (dinheiro, cartão), abertura/fechamento de caixa e técnicas de vendas.</p>
+                                                </div>
+                                            </div>
+                
+                                            <div class="flex justify-between gap-8 font-semibold">
+                                                <div class="font-[Catamaran] font-semibold text-xl">
+                                                    <p>Bairro: Nossa Senhora da Apresentação - ZN</p>
+                                                    <p>Duração: 60h</p>
+                                                    <p>Modalidade: Presencial</p>
+                                                </div>
+                                                <div class="flex pt-10 gap-6">
+                                                    <!-- BOTÃO SALVAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cursos_modal_3').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-solid fa-bookmark"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL SALVAR - ID ÚNICO -->
+                                                    <dialog id="cursos_modal_3" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso salvo com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                
+                                                    <!-- BOTÃO ADICIONAR -->
+                                                    <button 
+                                                        onclick="document.getElementById('cplus_modal_3').showModal()" 
+                                                        class="btn btn-accent w-10 rounded-full">
+                                                        <i class="fa-regular fa-plus"></i>
+                                                    </button>
+                                                    
+                                                    <!-- MODAL ADICIONAR - ID ÚNICO -->
+                                                    <dialog id="cplus_modal_3" class="modal">
+                                                        <div class="modal-box">
+                                                            <form method="dialog">
+                                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                                <h3 class="font-bold text-lg">Parabéns</h3>
+                                                                <p class="py-4">Curso adicionado com sucesso!</p>
+                                                            </form>
+                                                        </div>
+                                                    </dialog>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </section>
+                            </form>
+                        </div>
+                    </dialog>
+                
+                </section>
+
+    </main>
+    <!--FOOTER-->
+    <footer class="footer p-10 bottom-0 inset-y-0 bg-secondary shadow flex-col justify-around md:flex flex-row text-primary font-[Catamaran] font-semibold" :style="`font-size: ${scale * 16}px` "> 
+        <aside class="max-w-xl">
+            <figure class="justify-center">
+                <img class="w-130" src="/static/img/logo.svg" alt="Logo SAcesSol">
+            </figure>
+        </aside>
+        <div class="grid grid-cols-2 justify-between gap-20">
+            <nav class="grid grid-rows-5">
+                <strong class="footer-title text-primary font-bold">Site map</strong>
+                <a href="#sobre" class="">Sobre</a>
+                <a href="#blog" class="">Blog</a>
+                <a href="#empregos" class="">Empregos</a>
+                <a href="#cursos" class="">Cursos</a>
+            </nav>
+            <div class="grid grid-rows-4">
+                <strong class="footer-title text-primary font-bold">Contatos</strong>
+                <span><i class="fa-brands fa-whatsapp"></i>(84) 9 4002-8922</span>
+                <span><i class="fa-solid fa-phone pr-5"></i>SAC 4002-8922</span>
+                <span><i class="fa-solid fa-envelope pr-5"></i>acessol_natal@gmail.com.br</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

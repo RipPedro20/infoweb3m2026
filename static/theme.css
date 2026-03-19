@@ -1,0 +1,30 @@
+[data-theme="acessol"] {
+    --color-base-100: oklch(98% 0.016 73.684);
+    --color-base-200: oklch(90% 0.076 70.697);
+    --color-base-300: oklch(77.783% 0.12404 66.408);
+    --color-base-content: oklch(35.9% 0.200 82.800);
+    --color-primary: oklch(100% 0.00011 271.152);
+    --color-primary-content: oklch(98% 0.016 73.684);
+    --color-secondary: oklch(66.86% 0.14385 48.439);
+    --color-secondary-content: oklch(66.86% 0.14385 48.439);
+    --color-accent: oklch(64.865% 0.20792 142.722);
+    --color-accent-content: oklch(98% 0.016 73.684);
+    --color-neutral: oklch(98% 0.016 73.684);
+    --color-neutral-content: oklch(70% 0.213 47.604);
+    --color-info: oklch(82% 0.189 84.429);
+    --color-info-content: oklch(97% 0.014 254.604);
+    --color-success: oklch(75.489% 0.14578 131.183);
+    --color-success-content: oklch(31.9% 0.308 130);
+    --color-warning: oklch(92.2% 0.137 92.200);
+    --color-warning-content: oklch(39.6% 0.328 102.212);
+    --color-error: oklch(55% 0.195 38.402);
+    --color-error-content: oklch(96% 0.015 12.422);
+    --radius-selector: 1rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.25rem;
+    --size-selector: 0.28125rem;
+    --size-field: 0.25rem;
+    --border: 1.5px;
+    --depth: 1;
+    --noise: 1;
+}

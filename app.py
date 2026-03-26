@@ -10,7 +10,8 @@ def index():
 @app.route('/email')
 @app.route('/contato')
 def contato():
-    return render_template('contato.html')
+    dados = {"nome" : "PG", "email" : "f.coutinho", "tel" : "(84) 9 8892-5492"}
+    return render_template('contato.html', dados = dados)
 
 @app.route('/curriculo')
 def curriculo():
@@ -23,6 +24,19 @@ def disciplinas():
 @app.route('/acessol')
 def acessol():
     return render_template('acesSol.html')
+
+@app.route('/usuario', defaults={"nome" : "Desconhecido", "sobrenome" : "Desconhecido"})
+@app.route('/usuario/<nome>/<sobrenome>')
+def usuario(nome, sobrenome):
+    info = {"nome" : nome, "sobrenome" : sobrenome}
+    return render_template('usuario.html', info = info)
+
+@app.route('/semestre/<int:x>')
+def semestre(x):
+    dados = {}
+    dados=["atual"] = x
+    dados=["anterior"] = x - 1
+    return render_template('semestre.html', dados = dados)
 
 if __name__ == '__main__':
     app.run()

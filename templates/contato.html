@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css')}}">
 </head>
 <body>
+    <img src="{{ url_for('static', filename='img/contato.png') }}"  onclick="cliqueAqui()"/>
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <p>Nome: {{dados.nome}}</p>
     <p>
       E-mail: {{dados.email}}@escolar.ifrn.edu.br<br>

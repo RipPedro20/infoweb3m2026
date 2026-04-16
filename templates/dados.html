@@ -6,10 +6,20 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{url_for('/recebedados')}}">
-        Nome: <input type="text" name="nome">
+    <form action="{{url_for('recebedados')}}" method="post">
+        Nome: <input type="text" name="nome"><br>
         Sobrenome: <input type="text" name="sobrenome"><br>
-        Email: <input type="text" name="email"><br>
+        Email: <input type="email" name="email"><br>
+        Data de Nascimento: <input type="date" name="datanasc"><br>
+        <select name="estado">
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="CE">Ceará</option>
+            <option value="PB">Paraíba</option>
+        </select><br>
+        Escola: <br> <input type="checkbox" name="escola" value="IFRN">IFRN<br>
+                <input type="checkbox" name="escola" value="UFRN">UFRN<br>
+                <input type="checkbox" name="escola" value="UERN">UERN<br>
+                <input type="checkbox" name="escola" value="outro">Outro<br>
         <input type="submit" value="Enviar"><br>
     </form>
 </body>

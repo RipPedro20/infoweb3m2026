@@ -31,16 +31,13 @@ def usuario(nome, sobrenome):
     info = {"nome" : nome, "sobrenome" : sobrenome}
     return render_template('usuario.html', info = info)
 
-@app.route('/perfil/<usuario>')
-def perfil(usuario):
-	return render_template('perfil.html', usuario=usuario)
+@app.route('/dados')
+def dados():
+    return render_template('dados.html')
 
-# @app.route('/semestre/<int:x>')
-# def semestre(x):
-#     dados = {}
-#     dados=["atual"] = x
-#     dados=["anterior"] = x - 1
-#     return render_template('semestre.html', dados = dados)
+@app.route('/recebedados')
+def recebedados():
+    return 'ola'
 
 if __name__ == '__main__':
     app.run()

@@ -89,5 +89,19 @@ def arearestrita():
 def acessonegado():
     return render_template('acessonegado.html')
 
+@app.route('/exemplolaco')
+def exemplolaco():
+    return render_template('exemplolaco.html')
+
+@app.route('/produtos')
+def produtos():
+    itens=[
+        {'nome':'Mouse', 'preco':'100', 'categoria':'Periférico'},
+		{'nome':'Gabinete', 'preco':'120', 'categoria':'Computador'},
+		{'nome':'Fone', 'preco':'180','categoria':'Periférico'}
+        ]
+    qtd = len(itens)
+    return render_template('produtos.html', itens=itens)
+
 if __name__ == '__main__':
     app.run()
